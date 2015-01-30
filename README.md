@@ -1,6 +1,9 @@
 # WWDC-Dynamic-Type-Jumpy-Scroll-Issue
 Cloned the WWDC2014 Dynamic Type Table View example from #226 Whats New in Table and Collection Views to illustrate the jumpy scroll issue.
 
+https://developer.apple.com/videos/wwdc/2014/#226
+http://openradar.appspot.com/618103334
+
 We are experiencing an issue with table views where scrolling becomes very jumpy and table offsets are incorrectly reset when coming back from a subview. This is a clone of the WWDC cell auto sizing example to illustrate this issue and try to find a resolution.
 
 To reproduce scroll jumpiness:

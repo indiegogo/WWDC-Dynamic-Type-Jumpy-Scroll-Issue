@@ -11,7 +11,8 @@
 
 @interface ViewController ()
 
-@property NSArray *headlines;
+@property (nonatomic, strong) NSArray *headlines;
+@property (nonatomic, strong) NSMutableDictionary *rowHeightCache;
 
 @end
 
@@ -25,6 +26,9 @@
     
     
     self.tableView.contentInset = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
+    
+    self.rowHeightCache = [NSMutableDictionary new];
+    
     [self loadHeadlines];
 }
 
@@ -114,12 +118,12 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:@"subview" sender:self];
-    NSLog(@"Content Height: %f", self.tableView.contentSize.height);
+    NSLog(@"Content Height: %f cache:%ld", self.tableView.contentSize.height, self.rowHeightCache.count);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    NSLog(@"Content Height: %f", self.tableView.contentSize.height);
+    NSLog(@"Content Height: %f - cache:%ld", self.tableView.contentSize.height, self.rowHeightCache.count);
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -129,11 +133,32 @@
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     DynamicCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     cell.headlineLabel.text = _headlines[indexPath.row];
+    if (cell.lastHeight != 0) {
+        self.rowHeightCache[indexPath] = @(cell.lastHeight);
+    }
     return cell;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.rowHeightCache[indexPath] != nil) {
+        //NSLog(@"Found %@=%@", indexPath, self.rowHeightCache[indexPath]);
+        return [self.rowHeightCache[indexPath] floatValue];
+    } else {
+        return UITableViewAutomaticDimension;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.rowHeightCache[indexPath] != nil) {
+        //NSLog(@"Found %@=%@", indexPath, self.rowHeightCache[indexPath]);
+        return [self.rowHeightCache[indexPath] floatValue];
+    } else {
+        return self.tableView.estimatedRowHeight;
+    }
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSLog(@"Content Height: %f", self.tableView.contentSize.height);
+    //NSLog(@"Content Height: %f", self.tableView.contentSize.height);
 }
 
 @end

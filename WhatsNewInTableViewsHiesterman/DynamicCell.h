@@ -12,4 +12,6 @@
 
 @property UILabel *headlineLabel;
 
+@property (nonatomic, assign) CGFloat lastHeight;
+
 @end

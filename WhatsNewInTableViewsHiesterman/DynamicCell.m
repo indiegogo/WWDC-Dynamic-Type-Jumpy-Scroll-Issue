@@ -70,4 +70,20 @@
     return self;
 }
 
+- (CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize withHorizontalFittingPriority:(UILayoutPriority)horizontalFittingPriority verticalFittingPriority:(UILayoutPriority)verticalFittingPriority {
+    CGSize size = [super systemLayoutSizeFittingSize:targetSize withHorizontalFittingPriority:horizontalFittingPriority verticalFittingPriority:verticalFittingPriority];
+    self.lastHeight = size.height;
+    //NSLog(@"systemLayoutSizeFittingSize(%@) = height:%f",NSStringFromCGSize(targetSize), self.lastHeight);
+    return size;
+}
+
+
+- (CGSize)systemLayoutSizeFittingSize:(CGSize)targetSize {
+    CGSize size = [super systemLayoutSizeFittingSize:targetSize];
+    self.lastHeight = size.height;
+    //NSLog(@"systemLayoutSizeFittingSize(%@) = height:%f",NSStringFromCGSize(targetSize), self.lastHeight);
+    return size;
+}
+
+
 @end

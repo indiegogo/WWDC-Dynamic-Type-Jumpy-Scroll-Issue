@@ -20,6 +20,8 @@
 // check if height is on cache
 - (BOOL) ehc_isEstimatedRowHeightInCache:(NSIndexPath *) indexPath;
 
+-(void) ehc_clearEstimatedRowCacheForIndexPath:(NSIndexPath *) indexPath;
+
 -(void) ehc_clearAllEstimatedRowCache;
 
 @end

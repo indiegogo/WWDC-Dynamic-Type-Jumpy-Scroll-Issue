@@ -29,30 +29,38 @@
 // From http://stackoverflow.com/a/26371697/40444
 // put height to cache
 - (void) ehc_setEstimatedCellHeightToCache:(NSIndexPath *) indexPath height:(CGFloat) height {
-    [self.estimatedRowHeightCache setValue:[[NSNumber alloc] initWithFloat:height] forKey:[NSString stringWithFormat:@"%ld", indexPath.row]];
+    [self.estimatedRowHeightCache setObject:@(height) forKey:[self cacheKeyForIndexPath:indexPath]];
 }
 
 // get height from cache
 - (CGFloat) ehc_getEstimatedCellHeightFromCache:(NSIndexPath *) indexPath defaultHeight:(CGFloat) defaultHeight {
-    NSNumber *estimatedHeight = [self.estimatedRowHeightCache valueForKey:[NSString stringWithFormat:@"%ld", indexPath.row]];
+    NSNumber *estimatedHeight = [self.estimatedRowHeightCache objectForKey:[self cacheKeyForIndexPath:indexPath]];
     if (estimatedHeight != nil) {
-        //NSLog(@"cached: %f", [estimatedHeight floatValue]);
         return [estimatedHeight floatValue];
     }
-    //NSLog(@"not cached: %f", defaultHeight);
     return defaultHeight;
 }
 
 // check if height is on cache
 - (BOOL) ehc_isEstimatedRowHeightInCache:(NSIndexPath *) indexPath {
-    if ([self ehc_getEstimatedCellHeightFromCache:indexPath defaultHeight:0] > 0) {
+    if ([self.estimatedRowHeightCache objectForKey:[self cacheKeyForIndexPath:indexPath]] != nil) {
         return YES;
     }
     return NO;
 }
 
+-(void) ehc_clearEstimatedRowCacheForIndexPath:(NSIndexPath *) indexPath {
+    [self.estimatedRowHeightCache removeObjectForKey:[self cacheKeyForIndexPath:indexPath]];
+}
+
 - (void) ehc_clearAllEstimatedRowCache {
     [self.estimatedRowHeightCache removeAllObjects];
+}
+
+#pragma mark - Helpers
+
+- (NSString *)cacheKeyForIndexPath:(NSIndexPath *)indexPath {
+    return [NSString stringWithFormat:@"%ld-%ld", indexPath.section, indexPath.row];
 }
 
 @end

@@ -7,13 +7,12 @@
 //
 
 #import "ViewController.h"
+#import "UIViewController+EstimatedHeightCache.h"
 #import "DynamicCell.h"
 
 @interface ViewController ()
 
 @property (nonatomic, strong) NSArray *headlines;
-@property NSMutableDictionary *estimatedRowHeightCache;
-
 
 @end
 
@@ -25,10 +24,7 @@
     self.tableView.estimatedRowHeight = 44.0;
     self.tableView.rowHeight = UITableViewAutomaticDimension;
     
-    
     self.tableView.contentInset = UIEdgeInsetsMake(20.0, 0.0, 0.0, 0.0);
-    
-    self.estimatedRowHeightCache = [NSMutableDictionary new];
     
     [self loadHeadlines];
 }
@@ -134,9 +130,9 @@
     cell.headlineLabel.text = _headlines[indexPath.row];
     
     // put estimated cell height in cache if needed
-    if (![self isEstimatedRowHeightInCache:indexPath]) {
+    if (![self ehc_isEstimatedRowHeightInCache:indexPath]) {
         CGSize cellSize = [cell systemLayoutSizeFittingSize:CGSizeMake(self.view.frame.size.width, 0) withHorizontalFittingPriority:1000.0 verticalFittingPriority:50.0];
-        [self putEstimatedCellHeightToCache:indexPath height:cellSize.height];
+        [self ehc_setEstimatedCellHeightToCache:indexPath height:cellSize.height];
     }
     
     return cell;
@@ -147,53 +143,11 @@
 }
 
 -(CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [self getEstimatedCellHeightFromCache:indexPath defaultHeight:41.5];
+    return [self ehc_getEstimatedCellHeightFromCache:indexPath defaultHeight:41.5];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     //NSLog(@"Content Height: %f", self.tableView.contentSize.height);
-}
-
-#pragma mark - estimated height cache methods
-// From http://stackoverflow.com/a/26371697/40444
-// put height to cache
-- (void) putEstimatedCellHeightToCache:(NSIndexPath *) indexPath height:(CGFloat) height {
-    [self initEstimatedRowHeightCacheIfNeeded];
-    [self.estimatedRowHeightCache setValue:[[NSNumber alloc] initWithFloat:height] forKey:[NSString stringWithFormat:@"%ld", indexPath.row]];
-}
-
-// get height from cache
-- (CGFloat) getEstimatedCellHeightFromCache:(NSIndexPath *) indexPath defaultHeight:(CGFloat) defaultHeight {
-    [self initEstimatedRowHeightCacheIfNeeded];
-    NSNumber *estimatedHeight = [self.estimatedRowHeightCache valueForKey:[NSString stringWithFormat:@"%ld", indexPath.row]];
-    if (estimatedHeight != nil) {
-        //NSLog(@"cached: %f", [estimatedHeight floatValue]);
-        return [estimatedHeight floatValue];
-    }
-    //NSLog(@"not cached: %f", defaultHeight);
-    return defaultHeight;
-}
-
-// check if height is on cache
-- (BOOL) isEstimatedRowHeightInCache:(NSIndexPath *) indexPath {
-    if ([self getEstimatedCellHeightFromCache:indexPath defaultHeight:0] > 0) {
-        return YES;
-    }
-    return NO;
-}
-
-// init cache
--(void) initEstimatedRowHeightCacheIfNeeded {
-    if (self.estimatedRowHeightCache == nil) {
-        self.estimatedRowHeightCache = [[NSMutableDictionary alloc] init];
-    }
-}
-
-// custom [self.tableView reloadData]
--(void) tableViewReloadData {
-    // clear cache on reload
-    self.estimatedRowHeightCache = [[NSMutableDictionary alloc] init];
-    [self.tableView reloadData];
 }
 
 @end

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		691178111A82D58900BDCEBF /* UIViewController+EstimatedHeightCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 691178101A82D58900BDCEBF /* UIViewController+EstimatedHeightCache.m */; };
 		B9656DDB1A7C0BC900FD6170 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B9656DDA1A7C0BC900FD6170 /* main.m */; };
 		B9656DDE1A7C0BC900FD6170 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = B9656DDD1A7C0BC900FD6170 /* AppDelegate.m */; };
 		B9656DE11A7C0BC900FD6170 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = B9656DE01A7C0BC900FD6170 /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		6911780F1A82D58900BDCEBF /* UIViewController+EstimatedHeightCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+EstimatedHeightCache.h"; sourceTree = "<group>"; };
+		691178101A82D58900BDCEBF /* UIViewController+EstimatedHeightCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+EstimatedHeightCache.m"; sourceTree = "<group>"; };
 		B9656DD51A7C0BC900FD6170 /* WhatsNewInTableViewsHiesterman.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WhatsNewInTableViewsHiesterman.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9656DD91A7C0BC900FD6170 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B9656DDA1A7C0BC900FD6170 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -71,6 +74,8 @@
 				B9656DD81A7C0BC900FD6170 /* Supporting Files */,
 				B9656DFE1A7C0D0800FD6170 /* DynamicCell.h */,
 				B9656DFF1A7C0D0800FD6170 /* DynamicCell.m */,
+				6911780F1A82D58900BDCEBF /* UIViewController+EstimatedHeightCache.h */,
+				691178101A82D58900BDCEBF /* UIViewController+EstimatedHeightCache.m */,
 			);
 			path = WhatsNewInTableViewsHiesterman;
 			sourceTree = "<group>";
@@ -155,6 +160,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B9656DE11A7C0BC900FD6170 /* ViewController.m in Sources */,
+				691178111A82D58900BDCEBF /* UIViewController+EstimatedHeightCache.m in Sources */,
 				B9656E001A7C0D0800FD6170 /* DynamicCell.m in Sources */,
 				B9656DDE1A7C0BC900FD6170 /* AppDelegate.m in Sources */,
 				B9656DDB1A7C0BC900FD6170 /* main.m in Sources */,
@@ -300,6 +306,7 @@
 				B9656DFA1A7C0BC900FD6170 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

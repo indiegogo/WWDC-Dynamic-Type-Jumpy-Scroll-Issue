@@ -15,3 +15,6 @@ To reproduce scroll jumpiness:
   5. see in the console the current height of the table has been recalculated and is now much smaller, also observe that the cell visually jumps to a new location during this transition, helps if you toggle slow animations
   6. press back to go back to the table view
   7. scroll toward the top of the table, notice how jumpy the scrolling is and how the height of the table content is increased as the table scrolls
+
+A solution has been implemented here:
+https://github.com/IndieGoGo/IGTableViewEstimatedHeightCache
